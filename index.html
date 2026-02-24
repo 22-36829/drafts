@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bookside UI Screens</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      font-family: "Poppins", sans-serif;
+      background: radial-gradient(circle at top left, #e0e7ff 0, #f9fafb 45%, #eff6ff 100%);
+      color: #111827;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .shell {
+      width: 100%;
+      max-width: 520px;
+      background: #ffffff;
+      border-radius: 18px;
+      box-shadow:
+        0 20px 40px rgba(15, 23, 42, 0.18),
+        0 0 0 1px rgba(148, 163, 184, 0.18);
+      padding: 22px 22px 24px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: #eff6ff;
+      color: #1d4ed8;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #34d399;
+      box-shadow: 0 0 0 4px rgba(52, 211, 153, 0.25);
+    }
+    h1 {
+      font-size: 21px;
+      line-height: 1.25;
+      margin-bottom: 6px;
+      letter-spacing: -0.03em;
+    }
+    .subtitle {
+      font-size: 13px;
+      color: #6b7280;
+      margin-bottom: 18px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    @media (min-width: 540px) {
+      .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+    .card {
+      position: relative;
+      border-radius: 14px;
+      padding: 14px 14px 16px;
+      background: linear-gradient(135deg, #f9fafb, #eff6ff);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      overflow: hidden;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease, background 0.2s ease;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 30px rgba(15, 23, 42, 0.16);
+      border-color: #60a5fa;
+      background: linear-gradient(135deg, #eff6ff, #e0f2fe);
+    }
+    .card-title {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+    .card-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(59, 130, 246, 0.08);
+      color: #1d4ed8;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .card-pill-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 999px;
+      background: #3b82f6;
+    }
+    .card-desc {
+      font-size: 12px;
+      color: #6b7280;
+      line-height: 1.5;
+    }
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 4px;
+      font-size: 11px;
+      color: #9ca3af;
+    }
+    .chip {
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(16, 185, 129, 0.06);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: #059669;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .hint {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(156, 163, 175, 0.5);
+      margin-top: 6px;
+      font-size: 11px;
+      color: #9ca3af;
+    }
+    .hint span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .dot-small {
+      width: 4px;
+      height: 4px;
+      border-radius: 999px;
+      background: #9ca3af;
+    }
+    .kbd {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      padding: 2px 6px;
+      border-radius: 6px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: #f9fafb;
+      font-size: 10px;
+      color: #4b5563;
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <div class="badge">
+      <span class="badge-dot"></span>
+      Bookside · UI screens
+    </div>
+    <h1>Choose a screen to preview</h1>
+    <p class="subtitle">
+      This project contains multiple Bookside pages. Pick one below to open the full responsive mockup in your browser.
+    </p>
+
+    <section class="grid" aria-label="Available screens">
+      <a class="card" href="./bookside-category-responsive.html">
+        <div class="card-pill">
+          <span class="card-pill-dot"></span>
+          Category
+        </div>
+        <h2 class="card-title">Bookside · Category Listing</h2>
+        <p class="card-desc">
+          Browse book categories with responsive layout, price details, and interaction states for a shopping experience.
+        </p>
+        <div class="card-footer">
+          <span>Opens category-responsive layout</span>
+          <span class="chip">Main catalog</span>
+        </div>
+      </a>
+
+      <a class="card" href="./bookside-topay.html">
+        <div class="card-pill">
+          <span class="card-pill-dot"></span>
+          Orders · To Pay
+        </div>
+        <h2 class="card-title">Bookside · To Pay Orders</h2>
+        <p class="card-desc">
+          “My Orders” view with countdown timers, expandable order details, and call‑to‑action for completing payment.
+        </p>
+        <div class="card-footer">
+          <span>Opens to-pay orders screen</span>
+          <span class="chip">Payment funnel</span>
+        </div>
+      </a>
+    </section>
+
+    <div class="hint">
+      <span>
+        <span class="dot-small"></span>
+        Your Vercel root (<code class="kbd">/</code>) now shows this hub.
+      </span>
+      <span>
+        Direct URLs:
+        <code class="kbd">/bookside-category-responsive.html</code>
+        <code class="kbd">/bookside-topay.html</code>
+      </span>
+    </div>
+  </main>
+</body>
+</html>
+
