@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>Bookside – To Pay</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+::root {
+  --blue:       #597BFF;
+  --blue-light: #38B6FF;
+  --yellow:     #FFD200;
+  --red:        #E74C3C;
+  --green:      #22C55E;
+  --gray-btn:   #E2E8F5;
+  --white:      #FFFFFF;
+  --bg:         #F4F6FC;
+  --border:     #ECEEF6;
+  --text:       #1A1F3C;
+  --sub:        #4B527A;
+  --muted:      #9299BB;
+  --surface:    #F8F9FD;
+
+  /* spacing tokens */
+  --card-px: 16px;
+  --card-py: 14px;
+}
+
+html { font-size: 16px; }
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+
+/* ── PAGE ─────────────────────────────────────────── */
+.page {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 20px 16px 80px;
+}
+
+/* Header */
+.page-header { margin-bottom: 16px; }
+.page-header h2 {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -.25px;
+  color: var(--text);
+  line-height: 1.3;
+}
+.page-header p {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 3px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+/* ── ALERT ────────────────────────────────────────── */
+.alert {
+  background: #FFFBEC;
+  border: 1px solid #FDEDC5;
+  border-left: 3px solid var(--yellow);
+  border-radius: 10px;
+  padding: 11px 14px;
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin-bottom: 16px;
+}
+.alert-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+.alert-text { font-size: 12px; color: var(--sub); line-height: 1.55; font-weight: 400; }
+.alert-text strong { font-weight: 600; color: var(--text); }
+
+
+
+/* ── BUTTONS ──────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center; justify-content: center;
+  border: none; cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  transition: all .15s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn:active { opacity: .85; transform: scale(.97); }
+
+/* sizes */
+.btn-sm { font-size: 11.5px; padding: 6px 14px; border-radius: 7px; }
+.btn-md { font-size: 13px;   padding: 10px 20px; border-radius: 8px; }
+
+/* colors */
+.btn-yellow {
+  background: var(--yellow); color: #1A1F3C;
+  box-shadow: 0 2px 8px rgba(255,210,0,.28);
+}
+.btn-yellow:hover { filter: brightness(1.05); }
+
+.btn-blue {
+  background: linear-gradient(135deg, var(--blue), var(--blue-light));
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(56,182,255,.22);
+}
+
+.btn-green  { background: var(--green);    color: #fff; box-shadow: 0 2px 8px rgba(34,197,94,.22); }
+.btn-red    { background: var(--red);      color: #fff; box-shadow: 0 2px 8px rgba(231,76,60,.22); }
+.btn-gray   { background: var(--gray-btn); color: #8A94B2; cursor: default; }
+.btn-ghost  {
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  font-weight: 500;
+}
+.btn-ghost:hover { border-color: var(--red); color: var(--red); }
+
+/* ── ORDER CARD ───────────────────────────────────── */
+.order-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  margin-bottom: 12px;
+  overflow: hidden;
+  animation: fadeUp .28s ease both;
+}
+.order-card:nth-child(3){animation-delay:.04s}
+.order-card:nth-child(4){animation-delay:.08s}
+.order-card:nth-child(5){animation-delay:.12s}
+
+@keyframes fadeUp {
+  from{opacity:0;transform:translateY(8px)}
+  to  {opacity:1;transform:translateY(0)}
+}
+
+/* seller row */
+.card-seller {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px var(--card-px);
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+.seller-av {
+  width: 28px; height: 28px;
+  background: linear-gradient(135deg, var(--blue), var(--blue-light));
+  border-radius: 7px;
+  display: grid; place-items: center;
+  font-size: 12px; color: #fff; font-weight: 700;
+  flex-shrink: 0;
+}
+.seller-name {
+  font-size: 12.5px; font-weight: 600;
+  color: var(--text); flex: 1;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.status-pill {
+  font-size: 10.5px; font-weight: 600;
+  padding: 3px 9px; border-radius: 20px;
+  background: #EEF1FF; color: var(--blue);
+  flex-shrink: 0; letter-spacing: .1px;
+}
+
+/* product row */
+.product-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: var(--card-py) var(--card-px);
+  border-bottom: 1px solid var(--border);
+}
+.product-row:last-child { border-bottom: none; }
+
+.product-thumb {
+  width: 52px; height: 52px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #E8EEFF, #D6F2FF);
+  display: grid; place-items: center;
+  font-size: 22px; flex-shrink: 0;
+}
+.product-info { flex: 1; min-width: 0; }
+.product-name {
+  font-size: 12.5px; font-weight: 600; color: var(--text);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  margin-bottom: 2px; line-height: 1.4;
+}
+.product-author {
+  font-size: 11px; color: var(--muted);
+  margin-bottom: 3px; font-weight: 400;
+}
+.product-meta { font-size: 10.5px; color: var(--muted); font-weight: 400; }
+
+.product-price-col { text-align: right; flex-shrink: 0; }
+.price-now  { font-size: 13.5px; font-weight: 700; color: var(--blue); line-height: 1.3; }
+.price-orig { font-size: 10.5px; color: var(--muted); text-decoration: line-through; margin-top: 1px; }
+.price-disc { font-size: 10.5px; color: var(--red); font-weight: 600; }
+
+/* expand/collapse */
+.extra-rows {
+  overflow: hidden; max-height: 0;
+  transition: max-height .38s ease;
+}
+.extra-rows.open { max-height: 1400px; }
+
+.toggle-btn {
+  width: 100%;
+  display: flex; align-items: center; justify-content: center; gap: 5px;
+  padding: 9px var(--card-px);
+  background: var(--surface);
+  border: none; border-top: 1px solid var(--border);
+  font-family: 'Poppins', sans-serif;
+  font-size: 11.5px; font-weight: 600; color: var(--blue);
+  cursor: pointer; transition: background .15s;
+  -webkit-tap-highlight-color: transparent;
+}
+.toggle-btn:active { background: #EEF1FF; }
+.t-arrow { font-size: 10px; transition: transform .32s ease; display: inline-block; }
+.t-arrow.up { transform: rotate(180deg); }
+
+/* expiry row */
+.expiry-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px var(--card-px);
+  border-top: 1px solid var(--border);
+  background: #FFFBF9;
+}
+.expiry-label { font-size: 11.5px; color: var(--muted); font-weight: 500; }
+.countdown {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: #FFF0F0; border: 1px solid #F5CACA;
+  border-radius: 6px; padding: 4px 10px;
+  font-size: 12px; color: var(--red); font-weight: 700;
+  font-variant-numeric: tabular-nums; letter-spacing: .4px;
+}
+.c-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--red); flex-shrink: 0;
+  animation: blink 1.1s ease infinite;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.15}}
+
+/* card footer */
+.card-footer {
+  display: flex; align-items: center;
+  justify-content: space-between; gap: 10px;
+  padding: 12px var(--card-px);
+  border-top: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+.footer-total-label {
+  font-size: 11px; color: var(--muted);
+  margin-bottom: 2px; font-weight: 400;
+}
+.footer-total-value {
+  font-size: 17px; font-weight: 700;
+  color: var(--text); letter-spacing: -.3px; line-height: 1.2;
+}
+.footer-total-value .currency {
+  font-size: 12px; color: var(--blue-light); font-weight: 600;
+  margin-right: 1px;
+}
+.footer-actions { display: flex; gap: 8px; align-items: center; }
+
+/* ── RESPONSIVE ────────────────────────────────────── */
+
+/* Tablet */
+@media (min-width: 500px) {
+  .page { padding: 28px 24px 80px; }
+  :root { --card-px: 20px; --card-py: 15px; }
+  .product-thumb { width: 56px; height: 56px; font-size: 24px; }
+  .product-name { font-size: 13px; }
+  .footer-total-value { font-size: 18px; }
+}
+
+/* Desktop — centered card with generous spacing */
+@media (min-width: 768px) {
+  .page {
+    max-width: 640px;
+    padding: 36px 0 100px;
+  }
+  :root { --card-px: 24px; --card-py: 16px; }
+  .product-thumb { width: 60px; height: 60px; font-size: 26px; }
+  .product-name { font-size: 13.5px; }
+  .product-author { font-size: 11.5px; }
+  .product-meta { font-size: 11px; }
+  .footer-total-value { font-size: 19px; }
+  .seller-name { font-size: 13px; }
+  .alert-text { font-size: 12.5px; }
+}
+
+/* Large desktop */
+@media (min-width: 1024px) {
+  .page { max-width: 700px; padding: 40px 0 100px; }
+  :root { --card-px: 28px; --card-py: 18px; }
+  .page-header h2 { font-size: 20px; }
+  .page-header p  { font-size: 13px; }
+}
+
+/* Very small phones */
+@media (max-width: 360px) {
+  :root { --card-px: 13px; --card-py: 12px; }
+  .product-thumb { width: 46px; height: 46px; font-size: 20px; }
+  .btn-md { font-size: 12px; padding: 9px 14px; }
+  .footer-total-value { font-size: 15px; }
+  .footer-actions { width: 100%; justify-content: flex-end; }
+}
+</style>
+</head>
+<body>
+
+
+
+<div class="page">
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <h2>My Orders</h2>
+    <p>Complete your payment before the deadline to confirm your order.</p>
+  </div>
+
+  <!-- ALERT -->
+  <div class="alert">
+    <div class="alert-icon">⏳</div>
+    <div class="alert-text">
+      <strong>Action Required — </strong>Unpaid orders are automatically cancelled after 24 hours.
+    </div>
+  </div>
+
+
+
+  <!-- ── ORDER 1 ── -->
+  <div class="order-card">
+    <div class="card-seller">
+      <div class="seller-av">B</div>
+      <span class="seller-name">Bookside Official Store</span>
+      <span class="status-pill">To Pay</span>
+    </div>
+
+    <!-- visible: first 2 -->
+    <div class="product-row">
+      <div class="product-thumb">📘</div>
+      <div class="product-info">
+        <div class="product-name">Atomic Habits</div>
+        <div class="product-author">James Clear</div>
+        <div class="product-meta">Paperback · Qty: 1</div>
+      </div>
+      <div class="product-price-col">
+        <div class="price-now">₱549.00</div>
+        <div class="price-orig">₱650.00</div>
+        <div class="price-disc">−15%</div>
+      </div>
+    </div>
+
+    <div class="product-row">
+      <div class="product-thumb">🎨</div>
+      <div class="product-info">
+        <div class="product-name">The Art of Thinking Clearly</div>
+        <div class="product-author">Rolf Dobelli</div>
+        <div class="product-meta">Hardcover · Qty: 2</div>
+      </div>
+      <div class="product-price-col">
+        <div class="price-now">₱890.00</div>
+      </div>
+    </div>
+
+    <!-- expandable -->
+    <div class="extra-rows" id="ex1">
+      <div class="product-row">
+        <div class="product-thumb">🌍</div>
+        <div class="product-info">
+          <div class="product-name">Sapiens</div>
+          <div class="product-author">Yuval Noah Harari</div>
+          <div class="product-meta">Paperback · Qty: 1</div>
+        </div>
+        <div class="product-price-col">
+          <div class="price-now">₱620.00</div>
+          <div class="price-orig">₱700.00</div>
+          <div class="price-disc">−11%</div>
+        </div>
+      </div>
+      <div class="product-row">
+        <div class="product-thumb">💡</div>
+        <div class="product-info">
+          <div class="product-name">Deep Work</div>
+          <div class="product-author">Cal Newport</div>
+          <div class="product-meta">Paperback · Qty: 1</div>
+        </div>
+        <div class="product-price-col">
+          <div class="price-now">₱480.00</div>
+        </div>
+      </div>
+      <div class="product-row">
+        <div class="product-thumb">🧠</div>
+        <div class="product-info">
+          <div class="product-name">Thinking, Fast and Slow</div>
+          <div class="product-author">Daniel Kahneman</div>
+          <div class="product-meta">Paperback · Qty: 1</div>
+        </div>
+        <div class="product-price-col">
+          <div class="price-now">₱710.00</div>
+          <div class="price-orig">₱800.00</div>
+          <div class="price-disc">−11%</div>
+        </div>
+      </div>
+    </div>
+
+    <button class="toggle-btn" onclick="toggle('ex1','l1','a1')">
+      <span id="l1">Show 3 more items</span>
+      <span class="t-arrow" id="a1">▼</span>
+    </button>
+
+    <div class="expiry-row">
+      <span class="expiry-label">Payment deadline</span>
+      <div class="countdown" data-seconds="85267"><div class="c-dot"></div>23:41:07</div>
+    </div>
+
+    <div class="card-footer">
+      <div>
+        <div class="footer-total-label">Order Total · 5 items</div>
+        <div class="footer-total-value"><span class="currency">₱</span>3,309.00</div>
+      </div>
+      <div class="footer-actions">
+        <button class="btn btn-md btn-ghost">Cancel</button>
+        <button class="btn btn-md btn-yellow">Pay Now</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ORDER 2 ── -->
+  <div class="order-card">
+    <div class="card-seller">
+      <div class="seller-av">S</div>
+      <span class="seller-name">Story Hub PH</span>
+      <span class="status-pill">To Pay</span>
+    </div>
+
+    <div class="product-row">
+      <div class="product-thumb">💰</div>
+      <div class="product-info">
+        <div class="product-name">Rich Dad Poor Dad</div>
+        <div class="product-author">Robert Kiyosaki</div>
+        <div class="product-meta">Paperback · Qty: 1</div>
+      </div>
+      <div class="product-price-col">
+        <div class="price-now">₱399.00</div>
+      </div>
+    </div>
+
+    <div class="product-row">
+      <div class="product-thumb">🚀</div>
+      <div class="product-info">
+        <div class="product-name">Zero to One</div>
+        <div class="product-author">Peter Thiel</div>
+        <div class="product-meta">Paperback · Qty: 1</div>
+      </div>
+      <div class="product-price-col">
+        <div class="price-now">₱510.00</div>
+        <div class="price-orig">₱600.00</div>
+        <div class="price-disc">−15%</div>
+      </div>
+    </div>
+
+    <div class="extra-rows" id="ex2">
+      <div class="product-row">
+        <div class="product-thumb">🌟</div>
+        <div class="product-info">
+          <div class="product-name">The Alchemist</div>
+          <div class="product-author">Paulo Coelho</div>
+          <div class="product-meta">Paperback · Qty: 2</div>
+        </div>
+        <div class="product-price-col">
+          <div class="price-now">₱350.00</div>
+        </div>
+      </div>
+      <div class="product-row">
+        <div class="product-thumb">🏆</div>
+        <div class="product-info">
+          <div class="product-name">Can't Hurt Me</div>
+          <div class="product-author">David Goggins</div>
+          <div class="product-meta">Hardcover · Qty: 1</div>
+        </div>
+        <div class="product-price-col">
+          <div class="price-now">₱680.00</div>
+          <div class="price-orig">₱750.00</div>
+          <div class="price-disc">−9%</div>
+        </div>
+      </div>
+    </div>
+
+    <button class="toggle-btn" onclick="toggle('ex2','l2','a2')">
+      <span id="l2">Show 2 more items</span>
+      <span class="t-arrow" id="a2">▼</span>
+    </button>
+
+    <div class="expiry-row">
+      <span class="expiry-label">Payment deadline</span>
+      <div class="countdown" data-seconds="40970"><div class="c-dot"></div>11:22:50</div>
+    </div>
+
+    <div class="card-footer">
+      <div>
+        <div class="footer-total-label">Order Total · 4 items</div>
+        <div class="footer-total-value"><span class="currency">₱</span>1,939.00</div>
+      </div>
+      <div class="footer-actions">
+        <button class="btn btn-md btn-ghost">Cancel</button>
+        <button class="btn btn-md btn-yellow">Pay Now</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ORDER 3 ── -->
+  <div class="order-card">
+    <div class="card-seller">
+      <div class="seller-av">R</div>
+      <span class="seller-name">ReadMore Books</span>
+      <span class="status-pill">To Pay</span>
+    </div>
+
+    <div class="product-row">
+      <div class="product-thumb">🔬</div>
+      <div class="product-info">
+        <div class="product-name">A Brief History of Time</div>
+        <div class="product-author">Stephen Hawking</div>
+        <div class="product-meta">Paperback · Qty: 1</div>
+      </div>
+      <div class="product-price-col">
+        <div class="price-now">₱520.00</div>
+      </div>
+    </div>
+
+    <div class="product-row">
+      <div class="product-thumb">🧬</div>
+      <div class="product-info">
+        <div class="product-name">The Gene: An Intimate History</div>
+        <div class="product-author">Siddhartha Mukherjee</div>
+        <div class="product-meta">Hardcover · Qty: 1</div>
+      </div>
+      <div class="product-price-col">
+        <div class="price-now">₱760.00</div>
+        <div class="price-orig">₱850.00</div>
+        <div class="price-disc">−10%</div>
+      </div>
+    </div>
+
+    <div class="extra-rows" id="ex3">
+      <div class="product-row">
+        <div class="product-thumb">🌌</div>
+        <div class="product-info">
+          <div class="product-name">Cosmos</div>
+          <div class="product-author">Carl Sagan</div>
+          <div class="product-meta">Paperback · Qty: 1</div>
+        </div>
+        <div class="product-price-col">
+          <div class="price-now">₱490.00</div>
+        </div>
+      </div>
+      <div class="product-row">
+        <div class="product-thumb">⚛️</div>
+        <div class="product-info">
+          <div class="product-name">The Elegant Universe</div>
+          <div class="product-author">Brian Greene</div>
+          <div class="product-meta">Paperback · Qty: 1</div>
+        </div>
+        <div class="product-price-col">
+          <div class="price-now">₱540.00</div>
+          <div class="price-orig">₱620.00</div>
+          <div class="price-disc">−13%</div>
+        </div>
+      </div>
+    </div>
+
+    <button class="toggle-btn" onclick="toggle('ex3','l3','a3')">
+      <span id="l3">Show 2 more items</span>
+      <span class="t-arrow" id="a3">▼</span>
+    </button>
+
+    <div class="expiry-row">
+      <span class="expiry-label">Payment deadline</span>
+      <div class="countdown" data-seconds="86400"><div class="c-dot"></div>24:00:00</div>
+    </div>
+
+    <div class="card-footer">
+      <div>
+        <div class="footer-total-label">Order Total · 4 items</div>
+        <div class="footer-total-value"><span class="currency">₱</span>2,310.00</div>
+      </div>
+      <div class="footer-actions">
+        <button class="btn btn-md btn-ghost">Cancel</button>
+        <button class="btn btn-md btn-yellow">Pay Now</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function toggle(exId, lblId, arrId) {
+  const el   = document.getElementById(exId);
+  const lbl  = document.getElementById(lblId);
+  const arr  = document.getElementById(arrId);
+  const open = el.classList.toggle('open');
+  const n    = el.querySelectorAll('.product-row').length;
+  lbl.textContent = open ? 'Show less' : `Show ${n} more item${n !== 1 ? 's' : ''}`;
+  arr.classList.toggle('up', open);
+}
+
+// Live countdown
+function tick() {
+  document.querySelectorAll('.countdown').forEach(el => {
+    let t = parseInt(el.dataset.seconds || 0);
+    if (t > 0) t--;
+    el.dataset.seconds = t;
+    const pad = n => String(n).padStart(2, '0');
+    const h = Math.floor(t / 3600);
+    const m = Math.floor((t % 3600) / 60);
+    const s = t % 60;
+    el.innerHTML = `<div class="c-dot"></div>${pad(h)}:${pad(m)}:${pad(s)}`;
+    // orange warning under 1hr
+    if (t < 3600 && t > 0) {
+      el.style.background = '#FFF7F0';
+      el.style.borderColor = '#F5C89A';
+      el.style.color = '#C05C00';
+      const dot = el.querySelector('.c-dot');
+      if (dot) dot.style.background = '#E07000';
+    }
+  });
+}
+setInterval(tick, 1000);
+
+
+</script>
+</body>
+</html>
